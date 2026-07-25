@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💕 Do You Love Me? 💕</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for extra icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3, #ff8a9e);
+      background-size: 400% 400%;
+      animation: gradientBG 8s ease infinite;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating hearts background */
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .heart-float {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 20px;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) rotate(0deg) scale(0.5);
+        opacity: 0;
+      }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% {
+        transform: translateY(-10vh) rotate(720deg) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Main Card */
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 50px 40px;
+      border-radius: 30px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      position: relative;
+      width: 400px;
+      min-height: 320px;
+      z-index: 1;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.4s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 40px;
+      margin-bottom: 35px;
+      color: white;
+      font-family: 'Dancing Script', cursive;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      letter-spacing: 1px;
+    }
+
+    h1 .heart-pulse {
+      display: inline-block;
+      animation: pulseHeart 1.2s ease-in-out infinite;
+    }
+
+    @keyframes pulseHeart {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    .btn {
+      padding: 14px 40px;
+      margin: 10px 12px;
+      border: none;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn:active {
+      transform: scale(0.95);
+    }
+
+    .yes {
+      background: linear-gradient(135deg, #ff0066, #ff3366);
+      color: white;
+      box-shadow: 0 8px 30px rgba(255, 0, 102, 0.4);
+    }
+
+    .yes:hover {
+      transform: scale(1.12) translateY(-3px);
+      box-shadow: 0 12px 40px rgba(255, 0, 102, 0.5);
+    }
+
+    .yes i {
+      margin-right: 8px;
+    }
+
+    .no {
+      background: rgba(255, 255, 255, 0.95);
+      color: #ff0066;
+      position: absolute;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      min-width: 120px;
+    }
+
+    .no:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+    }
+
+    .no i {
+      margin-right: 8px;
+    }
+
+    /* Romantic Love Page */
+    .love-page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      color: white;
+      animation: fadeInLove 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      padding: 10px 0;
+    }
+
+    @keyframes fadeInLove {
+      0% {
+        opacity: 0;
+        transform: scale(0.7) rotate(-5deg);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    .love-page h2 {
+      font-size: 52px;
+      font-family: 'Dancing Script', cursive;
+      margin-bottom: 10px;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+      animation: shimmerText 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmerText {
+      0%, 100% { text-shadow: 0 4px 30px rgba(255, 255, 255, 0.3); }
+      50% { text-shadow: 0 4px 50px rgba(255, 200, 200, 0.8); }
+    }
+
+    .love-page .sub-message {
+      font-size: 20px;
+      margin-bottom: 25px;
+      opacity: 0.95;
+      font-weight: 400;
+      letter-spacing: 1px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 8px 25px;
+      border-radius: 50px;
+      backdrop-filter: blur(5px);
+    }
+
+    .love-page .sub-message i {
+      margin: 0 6px;
+    }
+
+    .love-page .image-wrapper {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      transition: 0.4s;
+    }
+
+    .love-page .image-wrapper:hover {
+      transform: scale(1.02);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .love-page img {
+      width: 320px;
+      height: auto;
+      display: block;
+      border-radius: 18px;
+      max-height: 300px;
+      object-fit: cover;
+    }
+
+    .love-page .image-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+      padding: 30px 15px 12px;
+      color: white;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    /* Confetti / Celebration */
+    .celebration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      top: -20px;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(720deg) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .container {
+        width: 90%;
+        padding: 35px 20px;
+        min-height: 280px;
+      }
+      h1 {
+        font-size: 32px;
+      }
+      .btn {
+        padding: 12px 28px;
+        font-size: 16px;
+        min-width: 100px;
+      }
+      .no {
+        min-width: 100px;
+      }
+      .love-page h2 {
+        font-size: 38px;
+      }
+      .love-page img {
+        width: 250px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      h1 {
+        font-size: 26px;
+      }
+      .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+        min-width: 80px;
+        margin: 8px;
+      }
+      .no {
+        min-width: 80px;
+      }
+      .love-page h2 {
+        font-size: 30px;
+      }
+      .love-page img {
+        width: 200px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating hearts background -->
+  <div class="floating-hearts" id="floatingHearts"></div>
+
+  <!-- Celebration container (hidden initially) -->
+  <div class="celebration" id="celebration"></div>
+
+  <!-- Main Card -->
+  <div class="container" id="mainPage">
+    <h1>
+      Do You <span class="heart-pulse">❤️</span> Love Me?
+    </h1>
+    <button class="btn yes" onclick="showLove()">
+      <i class="fas fa-heart"></i> Yes!
+    </button>
+    <button class="btn no" id="noBtn">
+      <i class="fas fa-times"></i> No
+    </button>
+  </div>
+
+  <!-- Love Page (hidden initially) -->
+  <div class="love-page" id="lovePage">
+    <h2>I Love You So Much 💕</h2>
+    <div class="sub-message">
+      <i class="fas fa-heart" style="color:#ffb3c6;"></i>
+      You are my everything
+      <i class="fas fa-heart" style="color:#ffb3c6;"></i>
+    </div>
+    <div class="image-wrapper">
+      <img id="coupleImg" src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=500&h=400&fit=crop&crop=center" alt="Romantic Couple">
+      <div class="image-caption">❤️ Forever together ❤️</div>
+    </div>
+    <p style="margin-top:18px; font-size:14px; opacity:0.8;">
+      <i class="fas fa-star" style="color:#ffd700;"></i>
+      You make my world beautiful
+      <i class="fas fa-star" style="color:#ffd700;"></i>
+    </p>
+  </div>
+
+  <script>
+    // ---------- Floating Hearts Background ----------
+    function createFloatingHearts() {
+      const container = document.getElementById('floatingHearts');
+      const heartSymbols = ['❤️', '💕', '💖', '💗', '💝', '✨'];
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('span');
+        heart.className = 'heart-float';
+        heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.fontSize = (Math.random() * 20 + 12) + 'px';
+        heart.style.animationDuration = (Math.random() * 15 + 10) + 's';
+        heart.style.animationDelay = (Math.random() * 15) + 's';
+        container.appendChild(heart);
+      }
+    }
+    createFloatingHearts();
+
+    // ---------- No Button: runs away + playful ----------
+    const noBtn = document.getElementById('noBtn');
+    const container = document.querySelector('.container');
+
+    noBtn.addEventListener('mouseover', function(e) {
+      // Only move if still on main page
+      if (document.getElementById('mainPage').style.display === 'none') return;
+
+      const containerRect = container.getBoundingClientRect();
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+
+      // Calculate available space inside container (with some padding)
+      const padding = 15;
+      const maxX = container.clientWidth - btnWidth - padding * 2;
+      const maxY = container.clientHeight - btnHeight - padding * 2;
+
+      // Ensure we don't go negative
+      const randomX = Math.max(padding, Math.min(Math.random() * maxX, maxX));
+      const randomY = Math.max(padding, Math.min(Math.random() * maxY, maxY));
+
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+
+      // Add a little shake effect
+      noBtn.style.transform = 'rotate(' + (Math.random() * 6 - 3) + 'deg) scale(0.95)';
+      setTimeout(() => {
+        noBtn.style.transform = 'scale(1) rotate(0deg)';
+      }, 150);
+
+      // Change text occasionally to tease
+      const teasers = ['No 💔', 'Hmm?', 'Really?', 'Try me!', 'Nope!', '😏', 'Think again!'];
+      if (Math.random() > 0.6) {
+        noBtn.innerHTML = '<i class="fas fa-times"></i> ' + teasers[Math.floor(Math.random() * teasers.length)];
+      }
+    });
+
+    // Reset no button text when mouse leaves
+    noBtn.addEventListener('mouseleave', function() {
+      if (document.getElementById('mainPage').style.display === 'none') return;
+      noBtn.innerHTML = '<i class="fas fa-times"></i> No';
+    });
+
+    // Also move on click (for mobile)
+    noBtn.addEventListener('click', function(e) {
+      if (document.getElementById('mainPage').style.display === 'none') return;
+      e.preventDefault();
+      // Move randomly on click too
+      const containerRect = container.getBoundingClientRect();
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+      const padding = 15;
+      const maxX = container.clientWidth - btnWidth - padding * 2;
+      const maxY = container.clientHeight - btnHeight - padding * 2;
+      const randomX = Math.max(padding, Math.min(Math.random() * maxX, maxX));
+      const randomY = Math.max(padding, Math.min(Math.random() * maxY, maxY));
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+
+      // show a playful alert (but not too annoying)
+      const msgs = ['You can\'t escape love! 😘', 'Just say YES! 💕', 'I\'ll keep asking! 😄', 'Love wins! ❤️'];
+      if (Math.random() > 0.7) {
+        alert(msgs[Math.floor(Math.random() * msgs.length)]);
+      }
+    });
+
+    // ---------- Show Love Page with celebration ----------
+    function showLove() {
+      // Hide main, show love page
+      document.getElementById('mainPage').style.display = 'none';
+      document.getElementById('lovePage').style.display = 'flex';
+
+      // Set image (using a beautiful couple image from Unsplash)
+document.getElementById('coupleImg').src = 'couple.jpg';
+      // Launch confetti celebration
+      launchConfetti();
+
+      // Play a little heart explosion sound effect (optional - just visual)
+      // Create extra floating hearts on love page
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('span');
+          heart.textContent = ['❤️', '💕', '💖', '💗', '✨', '🌸'][Math.floor(Math.random() * 6)];
+          heart.style.position = 'fixed';
+          heart.style.left = (Math.random() * 100) + '%';
+          heart.style.top = (Math.random() * 100) + '%';
+          heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+          heart.style.pointerEvents = 'none';
+          heart.style.zIndex = '100';
+          heart.style.opacity = '0';
+          heart.style.transition = 'all 1.5s ease-out';
+          document.body.appendChild(heart);
+          // Trigger fade in and float
+          setTimeout(() => {
+            heart.style.opacity = '1';
+            heart.style.transform = 'translateY(-80px) scale(1.3)';
+          }, 50);
+          setTimeout(() => {
+            heart.style.opacity = '0';
+            heart.style.transform = 'translateY(-200px) scale(1.8)';
+          }, 1000);
+          setTimeout(() => {
+            heart.remove();
+          }, 2000);
+        }, i * 100);
+      }
+    }
+
+    // ---------- Confetti Celebration ----------
+    function launchConfetti() {
+      const celebration = document.getElementById('celebration');
+      const colors = ['#ff0066', '#ff3366', '#ff6699', '#ffcc00', '#ff6b6b', '#ffb3c6', '#ff85a1', '#ffd700', '#ff1493'];
+
+      for (let i = 0; i < 120; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.width = (Math.random() * 10 + 6) + 'px';
+        piece.style.height = (Math.random() * 10 + 6) + 'px';
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        piece.style.animationDuration = (Math.random() * 2.5 + 2) + 's';
+        piece.style.animationDelay = (Math.random() * 2) + 's';
+        piece.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+        celebration.appendChild(piece);
+      }
+
+      // Remove confetti after animation
+      setTimeout(() => {
+        celebration.innerHTML = '';
+      }, 5000);
+    }
+
+    // ---------- Bonus: If user clicks anywhere on love page, more hearts ----------
+    document.getElementById('lovePage').addEventListener('click', function() {
+      if (this.style.display === 'flex') {
+        for (let i = 0; i < 15; i++) {
+          setTimeout(() => {
+            const heart = document.createElement('span');
+            heart.textContent = ['❤️', '💕', '💖', '💗', '✨', '🌸', '💝'][Math.floor(Math.random() * 7)];
+            heart.style.position = 'fixed';
+            heart.style.left = (Math.random() * 100) + '%';
+            heart.style.top = (Math.random() * 100) + '%';
+            heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '100';
+            heart.style.opacity = '0';
+            heart.style.transition = 'all 1.2s ease-out';
+            document.body.appendChild(heart);
+            setTimeout(() => {
+              heart.style.opacity = '1';
+              heart.style.transform = 'translateY(-60px) scale(1.4)';
+            }, 50);
+            setTimeout(() => {
+              heart.style.opacity = '0';
+              heart.style.transform = 'translateY(-150px) scale(1.8)';
+            }, 900);
+            setTimeout(() => {
+              heart.remove();
+            }, 1800);
+          }, i * 80);
+        }
+      }
+    });
+
+    console.log('💕 Made with love! Enjoy!');
+  </script>
+</body>
+</html>
